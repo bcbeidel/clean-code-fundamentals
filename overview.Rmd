@@ -1,0 +1,54 @@
+---
+title: "Intro To Computering"
+subtitle: "_a.k.a. Opinionated suggestions for writing better code_"
+author: "Brandon Beidel"
+date: "2/14/2019"
+output:
+  revealjs::revealjs_presentation:
+    theme: league
+    highlight: pygments
+    center: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Outline
+
+- 4 x 1 hour sessions
+- Code Block provided prior to start of class
+  - Large block of code to be refactored over life of class
+  - 
+  
+## Sessions
+
+- Introduction
+  - Code as literature (How to read a book)
+  - Meaningful names (Clean Code p. 17-30)
+- Session 2 
+  - Functions (Clean Code p. 31-52)
+- Session 3
+  - Comments (Clean Code p. 53-74)
+  - Formatting (Clean Code p. 75-92)
+- Session 4
+  - Testing
+  - Objects + Data Structures (i.e., Inheritance and Polymorphism)
+
+## Expectations Per Session
+
+- Reading Assignment prior to class
+- Code assignment after based on reading
+- exercises in class (what is wrong with with this block of code based on our discussion)
+- update your of a code block based on what you learned
+
+## How To Read A Book Correlary
+
+- 10:1 reading vs. writing for code in terms of time spent
+- Levels of Reading
+  - Elementary
+  - Inspectional
+  - Analytical
+  - Syntopical
+- It is a learned habit, repeated, challenged, and grown over time
+
