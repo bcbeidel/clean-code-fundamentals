@@ -1,0 +1,47 @@
+---
+title: "Clean Code Fundamentals"
+subtitle: "An opinionated introduction to writing better code"
+author: "Brandon Beidel"
+date: "2/24/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Wait, but why? {.flexbox .vcenter}
+
+<div class="columns-2">
+  <img src="./img/writing-code-that-no-one-else-can-read.jpg" 
+       alt="Writing Code No One Else Can Read" 
+       width="100%"
+  />
+
+  Poorly written code is **more costly** in the long-run
+
+  - more time to understand
+  - more time to debug
+  - more time to fix
+  - more time to migrate
+  - more time to test
+</div>
+
+## Writing code is reading code
+
+> “Indeed, the ratio of time spent reading versus writing is well over 10 to 1. We are constantly reading old code as part of the effort to write new code. ...[Therefore,] making it easy to read makes it easier to write.”
+>
+> -- <cite>Robert C. Martin</cite>
+
+## Reading as a skill
+
+Reading is a universal, trainable skill.  Reading code is no exception.  
+
+- Elementary Reading
+    - _"Do I understand the syntax of this line of code?"_
+- Inspectional Reading
+    - _"If skim this file, do I understand what it is trying to do?"_
+- Analytical Reading
+    - _"What is this application trying to do?"_
+- Syntopical Reading
+    - _"What are these applications trying to do as a whole?"_
