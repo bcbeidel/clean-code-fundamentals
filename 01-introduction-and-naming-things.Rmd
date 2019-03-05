@@ -1,8 +1,8 @@
 ---
-title: "Intro to Computering"
+title: "Clean Code Fundamentals"
 subtitle: "An opinionated introduction to writing better code"
 author: "Brandon Beidel"
-date: "2/24/2019"
+date: "3/12/2019"
 output: ioslides_presentation
 ---
 
@@ -60,17 +60,99 @@ Reading is a universal, trainable skill.  Reading code is no exception.
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">There are 2 hard problems in computer science: cache invalidation, naming things, and off-by-1 errors.</p>&mdash; Leon Bambrick (@secretGeek) <a href="https://twitter.com/secretGeek/status/7269997868?ref_src=twsrc%5Etfw">January 1, 2010</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## Naming Things
+## How to make less bad names
 
-Explain with example, Exercise, repeat.
+A few techniques...
 
-- Reveal Intent
-- Don't mislead the reader
-- Make meaningful distinctions
-- Use searchable names
-- Avoid Encodings
-- Don't be cute
-- One word, one concept
-- Use domain concepts
+> - Reveal your intent
+> - Make meaningful distinctions
+> - Use searchable names
+> - One word, one concept
+> - Use domain concepts
 
-## Naming Things: tl;dr
+## Reveal your intent
+
+Which would you choose?
+```{r, echo = TRUE, eval = FALSE}
+d = 90 # elapsed time in days
+
+elapsed_days = 90
+```
+
+<br>
+Good names aren't just for variables anymore.
+
+```{r, echo = TRUE, eval = FALSE}
+getThem = function(d){
+  ...
+}
+
+extractFlaggedOrders = function(orders){
+  ...
+}
+```
+
+## Make meaningful distinctions {.flexbox .vcenter}
+
+```{r, echo = TRUE, eval = FALSE}
+getActiveAcount()
+getActiveAccounts()
+getActiveAccountInfo()
+getActiveAccountData()
+getActiveAccountDetails()
+```
+
+![](./img/so-what-do-you-do-here.jpg)
+
+## Use searchable names
+
+What does this do?
+
+```{r echo = TRUE, eval = FALSE} 
+for (ii in 1:length(ic)){
+  if (it[ii] > ith){
+     ti = ti + ic[ii]
+  }
+}
+```
+
+## Now with searchable context...
+
+How about now?
+
+```{r, echo = TRUE, eval = FALSE} 
+for (impression_index in 1:length(impression_totals)){
+  current_value = impressions[impression_index]
+  if (current_value > impression_threshold){
+    total_impressions = total_impressions + current_value
+  }
+}
+```
+
+## One word, once concept
+
+```{r, echo = TRUE, eval = FALSE}
+ad_data = fetch_adgroup_information(ids = ad_ids)
+adgroup_performance = retrieve_ad_performance_data(x = ad_ids)
+account_detail = collect_adgroup_details(account_numbers)
+```
+<br>
+```{r, echo = TRUE, eval = FALSE}
+adgroup_details     = collect_adgroup_details(ids = adgroup_ids)
+adgroup_performance = collect_adgroup_performance(ids = adgroup_ids)
+account_details     = collect_account_details(ids = account_ids)
+```
+
+<br>
+
+> - What are the key concepts?
+> - What are the common verbs? What do they indicate?
+> - What are the common nouns?
+> - What additional context does the reader need?
+
+## Use domain concepts
+
+
+
+## 
+

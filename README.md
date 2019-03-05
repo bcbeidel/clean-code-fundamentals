@@ -1,4 +1,4 @@
-# intro-to-computering
+# clean-code-fundamentals
 
 A short workshop series on coding heuristics, intended to help people of all coding skill levels write cleaner, more maintainable code.  The content is primarily based on the book _Clean Code: A Handbook of Agile Software Craftsmanship_ by Robert C. Martin.
 
@@ -31,7 +31,14 @@ The discussion(s) is structured as four one hour blocks, intended to cover the f
     - Clean Code: Boundaries (p. 113-120)
     - Stackify: Object Oriented Concepts (https://stackify.com/oops-concepts-in-java/)
 
-Each discussion is accompanied by an associated reading and a few short coding exercises.  In addition, prior to starting, each participant is encouraged to submit a block of code that they would like to refactor over the course of the discussions (50 - 100 lines).  During the hour, some time will be allocated to review the code in pairs and discuss how it could be improved based on the discussion.
+Each discussion is accompanied by an associated reading and a few short coding exercises.  In addition, prior to starting, each participant is encouraged to submit a block of code that they would like to refactor over the course of the discussions (50 - 100 lines).  During the hour, some time will be allocated to review the code in pairs and discuss how it could be improved based on the discussion.  Code examples will be in `R` but many of the principals are the same.
+
+## Preparation
+
+To get the most out of each session, partipants are encouraged to:
+
+- Identify and bring a block of code (50 to 100 lines) to refactor during the hour
+- Complete the readings associated with each section
 
 ## Sources
 
@@ -40,6 +47,10 @@ When preparing for these discussions, these are the resources I leaned on the mo
 - Martin, Robert C., and Lei Han. _Clean Code: A Handbook of Agile Software Craftsmanship._
 - Mortimer, Adler J., Charles Van Doren. _How to Read a Book: The Classic Guide to Intelligent Reading_
 
+## Other seemingly trivial things that bother programmers...
+
+- [Of Spaces, underscores, and dashes](https://blog.codinghorror.com/of-spaces-underscores-and-dashes/)
+- [Which programming case is correct](https://www.reddit.com/r/ProgrammerHumor/comments/5iqykw/vs_help_me_settle_the_age_old_programming_case/)
 
 ## Contributors
 
