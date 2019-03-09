@@ -62,51 +62,123 @@ Reading is a universal, trainable skill.  Reading code is no exception.
 
 ## How to make less bad names
 
-A few techniques...
+Consider making your names:
 
-> - Reveal your intent
-> - Make meaningful distinctions
-> - Use searchable names
-> - One word, one concept
-> - Use domain concepts
+> - Informative 
+> - Meaningfully Distinct
+> - Consistent
+> - Searchable
+> - Contextual
 
-## Reveal your intent
+## Un-Informative Variables
 
-Which would you choose?
 ```{r, echo = TRUE, eval = FALSE}
 d = 90 # elapsed time in days
+```
 
+<br>
+
+What is good and bad about the context of this line?
+
+> - **Good:** Comment provides context on the variable contents and usage
+> - **Bad:**  Later uses of `d` won't have that same context attached
+
+## Informative Variables
+
+```{r, echo = TRUE, eval = FALSE}
 elapsed_days = 90
 ```
 
 <br>
-Good names aren't just for variables anymore.
+
+What is so good about this version?
+
+> - context is baked into `elapsed_days`
+>   - a numeric value
+>   - some represenation of time that has passed
+> - context will travel with the use of the variable
+
+## Un-Informative Functions
 
 ```{r, echo = TRUE, eval = FALSE}
-getThem = function(d){
-  ...
-}
-
-extractFlaggedOrders = function(orders){
-  ...
+get_them = function(the_list){
+  list1 = list()
+  for (x in the_list) {
+    if(x[0] == 4) {
+      list1 = append(list1, x)
+    }
+  }
+  return(list1)
 }
 ```
 
-## Make meaningful distinctions {.flexbox .vcenter}
+What are the redeeming qualities of this function?
+
+> - It runs, maybe.
+
+## Informative Functions
 
 ```{r, echo = TRUE, eval = FALSE}
-getActiveAcount()
-getActiveAccounts()
-getActiveAccountInfo()
-getActiveAccountData()
-getActiveAccountDetails()
+extract_flagged_orders = function(orders){
+  flagged_orders = list()
+  for (order in orders){
+    if (is_flagged_order(order)){
+      flagged_orders = append(flagged_orders, order)
+    }
+  }
+  return(flagged_orders)
+}
+
+is_flagged_order = function(order){
+  return(order[0] == 4)
+}
+```
+
+What questions are left unanswered by the code above?
+
+## Meaningful distinctions {.flexbox .vcenter}
+
+```{r, echo = TRUE, eval = FALSE}
+active_account         = get_active_account()
+active_accounts        = harvest_active_accounts()
+active_account_info    = collect_active_account_info()
+active_account_data    = retrieve_active_account_data()
+active_account_details = magically_generate_active_account_details()
 ```
 
 ![](./img/so-what-do-you-do-here.jpg)
 
-## Use searchable names
+## Inconsistent names
 
-What does this do?
+```{r, echo = TRUE, eval = FALSE}
+ad_data = fetch_adgroup_information(ids = ad_ids)
+adgroup_performance = retrieve_ad_performance_data(x = ad_ids)
+account_detail = collect_adgroup_details(account_numbers)
+```
+
+<br>
+Questions a reader might have:
+
+- What is the difference between `fetch`, `collect`, and `retrieve`?
+- What does `ad_data` and `adgroup_performance` contain? Why is it different?
+
+## Consistent names
+
+```{r, echo = TRUE, eval = FALSE}
+adgroup_details     = collect_adgroup_details(ids = adgroup_ids)
+adgroup_performance = collect_adgroup_performance(ids = adgroup_ids)
+account_details     = collect_account_details(ids = account_ids)
+```
+<br>
+
+> - What are the common verb(s)? What do they indicate?
+>   - `collect`, we are probably pulling in data
+> - What are the common nouns (i.e., objects)?
+>   - `adgroup`, `account`, `id`, `details`
+> - What additional knowledge does the reader need?
+>   - Probably need some context on paid search accounts and adgroups  
+
+## Un-Searchable Names
 
 ```{r echo = TRUE, eval = FALSE} 
 for (ii in 1:length(ic)){
@@ -116,9 +188,13 @@ for (ii in 1:length(ic)){
 }
 ```
 
-## Now with searchable context...
+Searchable names helps find code when you are
 
-How about now?
+> - fixing errors
+> - refactoring
+> - enhancing functionality
+
+## Searchable Names
 
 ```{r, echo = TRUE, eval = FALSE} 
 for (impression_index in 1:length(impression_totals)){
@@ -129,30 +205,66 @@ for (impression_index in 1:length(impression_totals)){
 }
 ```
 
-## One word, once concept
+## Without context
 
 ```{r, echo = TRUE, eval = FALSE}
-ad_data = fetch_adgroup_information(ids = ad_ids)
-adgroup_performance = retrieve_ad_performance_data(x = ad_ids)
-account_detail = collect_adgroup_details(account_numbers)
+library(zeallot)
+print_count_message = function(candidate, count){
+  
+  if (count == 0) {
+    c(number, verb, modifier) %<-% c("no", "are", "s")
+  } else if (count == 1) {
+    c(number, verb, modifier) %<-% c("1", "is", "")
+  } else {
+    c(number, verb, modifier) %<-% c(toString(count), "are", "s")
+  }
+  guess_message = sprintf("There %s %s %s%s", verb, number, candidate, modifier)
+  print(guess_message)
+}
 ```
-<br>
+
+## And now, with context
+
 ```{r, echo = TRUE, eval = FALSE}
-adgroup_details     = collect_adgroup_details(ids = adgroup_ids)
-adgroup_performance = collect_adgroup_performance(ids = adgroup_ids)
-account_details     = collect_account_details(ids = account_ids)
+print_count_message
+
 ```
 
-<br>
+public class GuessStatisticsMessage {
+ private String number;
+ private String verb;
+ private String pluralModifier;
+ public String make(char candidate, int count) {
+ createPluralDependentMessageParts(count);
+ return String.format(
+ "There %s %s %s%s",
+ verb, number, candidate, pluralModifier );
+ }
+ private void createPluralDependentMessageParts(int count) {
+ if (count == 0) {
+ thereAreNoLetters();
+ } else if (count == 1) {
+ thereIsOneLetter();
+ } else {
+ thereAreManyLetters(count);
+ }
+ }
+ private void thereAreManyLetters(int count) {
+ number = Integer.toString(count);
+ verb = "are";
+ pluralModifier = "s";
+ }
+ private void thereIsOneLetter() {
+ number = "1";
+ verb = "is";
+ pluralModifier = "";
+ }
+ private void thereAreNoLetters() {
+ number = "no";
+ verb = "are";
+ pluralModifier = "s";
+ }
+}
 
-> - What are the key concepts?
-> - What are the common verbs? What do they indicate?
-> - What are the common nouns?
-> - What additional context does the reader need?
 
-## Use domain concepts
-
-
-
-## 
 
