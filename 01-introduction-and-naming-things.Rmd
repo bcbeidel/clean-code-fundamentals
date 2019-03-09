@@ -95,7 +95,7 @@ What is so good about this version?
 
 > - context is baked into `elapsed_days`
 >   - a numeric value
->   - some represenation of time that has passed
+>   - some representation of time that has passed
 > - context will travel with the use of the variable
 
 ## Un-Informative Functions
@@ -151,9 +151,9 @@ active_account_details = magically_generate_active_account_details()
 ## Inconsistent names
 
 ```{r, echo = TRUE, eval = FALSE}
-ad_data = fetch_adgroup_information(ids = ad_ids)
+ad_data             = fetch_adgroup_information(ids = ad_ids)
 adgroup_performance = retrieve_ad_performance_data(x = ad_ids)
-account_detail = collect_adgroup_details(account_numbers)
+account_detail      = collect_adgroup_details(account_numbers)
 ```
 
 <br>
@@ -176,7 +176,7 @@ account_details     = collect_account_details(ids = account_ids)
 > - What are the common nouns (i.e., objects)?
 >   - `adgroup`, `account`, `id`, `details`
 > - What additional knowledge does the reader need?
->   - Probably need some context on paid search accounts and adgroups  
+>   - Probably need some context on paid search accounts and ad groups  
 
 ## Un-Searchable Names
 
@@ -209,7 +209,7 @@ for (impression_index in 1:length(impression_totals)){
 
 ```{r, echo = TRUE, eval = FALSE}
 library(zeallot)
-print_count_message = function(candidate, count){
+generate_and_send_guess_statistics_message = function(character, count){
   
   if (count == 0) {
     c(number, verb, modifier) %<-% c("no", "are", "s")
@@ -218,53 +218,65 @@ print_count_message = function(candidate, count){
   } else {
     c(number, verb, modifier) %<-% c(toString(count), "are", "s")
   }
-  guess_message = sprintf("There %s %s %s%s", verb, number, candidate, modifier)
+  guess_message = sprintf("There %s %s %s%s", verb, number, character, modifier)
   print(guess_message)
 }
 ```
 
-## And now, with context
+## With more context (and encapsulation)
 
-```{r, echo = TRUE, eval = FALSE}
-print_count_message
-
-```
-
-public class GuessStatisticsMessage {
- private String number;
- private String verb;
- private String pluralModifier;
- public String make(char candidate, int count) {
- createPluralDependentMessageParts(count);
- return String.format(
- "There %s %s %s%s",
- verb, number, candidate, pluralModifier );
- }
- private void createPluralDependentMessageParts(int count) {
- if (count == 0) {
- thereAreNoLetters();
- } else if (count == 1) {
- thereIsOneLetter();
- } else {
- thereAreManyLetters(count);
- }
- }
- private void thereAreManyLetters(int count) {
- number = Integer.toString(count);
- verb = "are";
- pluralModifier = "s";
- }
- private void thereIsOneLetter() {
- number = "1";
- verb = "is";
- pluralModifier = "";
- }
- private void thereAreNoLetters() {
- number = "no";
- verb = "are";
- pluralModifier = "s";
- }
+```{r, echo = TRUE, eval = FALSE }
+create_and_print_guess_statistics_message = function(character, count){
+  message = select_guess_statistics_message(character, count)
+  print(message)
 }
 
+create_guess_statistics_messages = function(character, count){
+  if (count == 0) { 
+    return(create_no_count_message(character)) 
+  }
+  if (count == 1) { 
+    return(create_single_count_message(character)) }
+  }
+  return(create_many_count_message(character, count))
+}
+```
+## And now the next layer down...
 
+``` {r, eval = FALSE, echo = TRUE}
+create_no_count_message = function(character){
+  create_statistics_message("are", "no", character, "s")
+}
 
+create_single_count_message = function(character) {
+  create_statistics_message("is", "1", character, "")
+}
+
+create_many_count_message = function(character, count) {
+  create_statistics_message("are", toString(count), character, "s")
+}
+
+create_statistics_message = function(verb, number, character, modifier){
+  sprintf("There %s %s %s%s", verb, number, character, modifier)
+}
+```
+
+## Now, an exercise.
+
+**Description:** Find a partner and exchange a block of code you have written. 50-100 lines. Try and refactor the code based on our discussion while maintaining functionality.  For the first 10 minutes try not to ask any questions, and allow the code to "speak" for itself.
+
+**Time:** 30 Minutes Total
+
+- 10 Minutes - Refactor partner code, no questions
+- 10 Minutes - Refactor partner code, with questions
+- 10 Minutes - Review your results with your partner
+
+---
+
+Questions to keep in mind while you are refactoring?
+
+- Are the names of functions and variables informative? 
+- Do the names provide meaningful distinction?
+- Are the verbs and nouns consistent throughout the block?
+- Are the key terms easy to search for?
+- Does each section of code provide enough context to make it understandable?

@@ -3226,7 +3226,7 @@ There are 2 hard problems in computer science: cache invalidation, naming things
 
 <ul>
 <li>a numeric value</li>
-<li>some represenation of time that has passed</li>
+<li>some representation of time that has passed</li>
 </ul></li>
 <li>context will travel with the use of the variable</li>
 </ul>
@@ -3279,9 +3279,9 @@ active_account_details = magically_generate_active_account_details()</pre>
 
 </article></slide><slide class=""><hgroup><h2>Inconsistent names</h2></hgroup><article  id="inconsistent-names">
 
-<pre class = 'prettyprint lang-r'>ad_data = fetch_adgroup_information(ids = ad_ids)
+<pre class = 'prettyprint lang-r'>ad_data             = fetch_adgroup_information(ids = ad_ids)
 adgroup_performance = retrieve_ad_performance_data(x = ad_ids)
-account_detail = collect_adgroup_details(account_numbers)</pre>
+account_detail      = collect_adgroup_details(account_numbers)</pre>
 
 <p><br> Questions a reader might have:</p>
 
@@ -3312,7 +3312,7 @@ account_details     = collect_account_details(ids = account_ids)</pre>
 <li>What additional knowledge does the reader need?
 
 <ul>
-<li>Probably need some context on paid search accounts and adgroups</li>
+<li>Probably need some context on paid search accounts and ad groups</li>
 </ul></li>
 </ul>
 
@@ -3341,10 +3341,10 @@ account_details     = collect_account_details(ids = account_ids)</pre>
   }
 }</pre>
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section">
+</article></slide><slide class=""><hgroup><h2>Without context</h2></hgroup><article  id="without-context">
 
 <pre class = 'prettyprint lang-r'>library(zeallot)
-print_guess_statistic = function(candidate, count){
+generate_and_send_guess_statistics_message = function(character, count){
   
   if (count == 0) {
     c(number, verb, modifier) %&lt;-% c(&quot;no&quot;, &quot;are&quot;, &quot;s&quot;)
@@ -3353,11 +3353,68 @@ print_guess_statistic = function(candidate, count){
   } else {
     c(number, verb, modifier) %&lt;-% c(toString(count), &quot;are&quot;, &quot;s&quot;)
   }
-  guess_message = sprintf(&quot;There %s %s %s%s&quot;, verb, number, candidate, modifier)
+  guess_message = sprintf(&quot;There %s %s %s%s&quot;, verb, number, character, modifier)
   print(guess_message)
 }</pre>
 
-</article></slide><slide class=""><hgroup><h2>And now, with context</h2></hgroup><article  id="and-now-with-context"></article></slide>
+</article></slide><slide class=""><hgroup><h2>With more context (and encapsulation)</h2></hgroup><article  id="with-more-context-and-encapsulation">
+
+<pre class = 'prettyprint lang-r'>create_and_print_guess_statistics_message = function(character, count){
+  message = select_guess_statistics_message(character, count)
+  print(message)
+}
+
+create_guess_statistics_messages = function(character, count){
+  if (count == 0) { 
+    return(create_no_count_message(character)) 
+  }
+  if (count == 1) { 
+    return(create_single_count_message(character)) }
+  }
+  return(create_many_count_message(character, count))
+}</pre>
+
+</article></slide><slide class=""><hgroup><h2>And now the next layer down…</h2></hgroup><article  id="and-now-the-next-layer-down">
+
+<pre class = 'prettyprint lang-r'>create_no_count_message = function(character){
+  create_statistics_message(&quot;are&quot;, &quot;no&quot;, character, &quot;s&quot;)
+}
+
+create_single_count_message = function(character) {
+  create_statistics_message(&quot;is&quot;, &quot;1&quot;, character, &quot;&quot;)
+}
+
+create_many_count_message = function(character, count) {
+  create_statistics_message(&quot;are&quot;, toString(count), character, &quot;s&quot;)
+}
+
+create_statistics_message = function(verb, number, character, modifier){
+  sprintf(&quot;There %s %s %s%s&quot;, verb, number, character, modifier)
+}</pre>
+
+</article></slide><slide class=""><hgroup><h2>Now, an exercise.</h2></hgroup><article  id="now-an-exercise.">
+
+<p><strong>Description:</strong> Find a partner and exchange a block of code you have written. 50-100 lines. Try and refactor the code based on our discussion while maintaining functionality. For the first 10 minutes try not to ask any questions, and allow the code to &ldquo;speak&rdquo; for itself.</p>
+
+<p><strong>Time:</strong> 30 Minutes Total</p>
+
+<ul>
+<li>10 Minutes - Refactor partner code, no questions</li>
+<li>10 Minutes - Refactor partner code, with questions</li>
+<li>10 Minutes - Review your results with your partner</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
+
+<p>Questions to keep in mind while you are refactoring?</p>
+
+<ul>
+<li>Are the names of functions and variables informative?</li>
+<li>Do the names provide meaningful distinction?</li>
+<li>Are the verbs and nouns consistent throughout the block?</li>
+<li>Are the key terms easy to search for?</li>
+<li>Does each section of code provide enough context to make it understandable?</li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>
