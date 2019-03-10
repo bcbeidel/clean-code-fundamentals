@@ -139,7 +139,6 @@ What questions are left unanswered by the code above?
 ## Meaningful distinctions {.flexbox .vcenter}
 
 ```{r, echo = TRUE, eval = FALSE}
-active_account         = get_active_account()
 active_accounts        = harvest_active_accounts()
 active_account_info    = collect_active_account_info()
 active_account_data    = retrieve_active_account_data()
@@ -270,6 +269,10 @@ create_statistics_message = function(verb, number, character, modifier){
 - 10 Minutes - Refactor partner code, no questions
 - 10 Minutes - Refactor partner code, with questions
 - 10 Minutes - Review your results with your partner
+
+## {.flexbox .vcenter}
+
+![](https://imgs.xkcd.com/comics/code_quality.png)
 
 ---
 
