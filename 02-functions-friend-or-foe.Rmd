@@ -1,0 +1,34 @@
+---
+title: "Clean Code Fundamentals"
+subtitle: "Functions: Friend or Foe?"
+author: "Brandon Beidel"
+date: "3/19/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## {.flexbox .vcenter}
+
+![](https://imgs.xkcd.com/comics/code_quality_2.png)
+
+## Qualities of a Good Function
+
+> Has a descriptive name
+> Is Small
+> Does One Thing
+> Uses Fewer Arguments
+> Provides a single layer of abstraction
+> Side Effect Free
+
+## Another exercise.
+
+**Description:** Find a partner and exchange a block of code you have written. 50-100 lines. Try and refactor the code based on our discussion while maintaining functionality.  For the first 10 minutes try not to ask any questions, and allow the code to "speak" for itself.
+
+**Time:** 30 Minutes Total
+
+- 10 Minutes - Refactor partner code, no questions
+- 10 Minutes - Refactor partner code, with questions
+- 10 Minutes - Review your results with your partner
