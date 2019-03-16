@@ -14,14 +14,86 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ![](https://imgs.xkcd.com/comics/code_quality_2.png)
 
+## Good Names Recap
+
+Good Names are
+
+- Informative 
+- Distinct
+- Consistent
+- Searchable
+
+## Functions: Friend or Foe?
+
+**Question: Functions can be used to do which of the following:**
+
+<br>
+
+A) Create descriptive landmarks in the flow of logic
+B) Provide concise summary of inputs for a task
+C) Encapsulate logic into small, testable blocks
+D) Create reusable blocks of applicaiton logic
+
+<br> 
+
+> - Answer, It can do all of these things, but only if you try...
+
 ## Qualities of a Good Function
+
+What are some things that make a good function?
+
+<br>
 
 > Has a descriptive name
 > Is Small
 > Does One Thing
 > Uses Fewer Arguments
 > Provides a single layer of abstraction
-> Side Effect Free
+> Is Side Effect Free
+
+## Use descriptive names 
+
+```{r, echo = TRUE, eval = FALSE}
+get_em = function(orders){
+  flagged_orders = list()
+  for (order in orders){
+    if (is_flagged_order(order)){
+      flagged_orders = append(flagged_orders, order)
+    }
+  }
+  return(flagged_orders)
+}
+```
+<br>
+> - **Question: What are some suggested names for this function?**
+
+---
+
+```{r, echo = TRUE, eval = FALSE}
+extract_flagged_orders = function(orders){
+  flagged_orders = list()
+  for (order in orders){
+    if (is_flagged_order(order)){
+      flagged_orders = append(flagged_orders, order)
+    }
+  }
+  return(flagged_orders)
+}
+```
+
+## Keep it small
+
+---
+
+Rule of Thumb: 5 lines or less
+
+## Limit your inputs
+
+## Abstract a single layer
+
+## Don't create side-effects
+
+## The Exercise
 
 ## Another exercise.
 
