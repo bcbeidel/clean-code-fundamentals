@@ -1,6 +1,14 @@
 # Conduct a series of data transformations to training and test sets prior to modeling
 import pandas as pd
 
+def get_credit_card_data(path):
+    data = pd.read_csv(path, index_col='customer_id')
+    return(data)
+
+def handle_duplicate_records(data):
+    data = data.drop_duplicates()
+    return data
+
 def transform_sex(data):
     """Transform Numeric To Cateogical Features"""
     data['sex'] = data['sex'].map({1:'male', 2:'female'})
@@ -42,30 +50,25 @@ def generate_total_months_delinqient(data):
     data['tmd'] = data['pay_1'] + data['pay_2'] + data['pay_3'] + data['pay_4'] + data['pay_5'] + data['pay_6']
     return data
 
-def transform_target(data):
+def transform_target_variable(data):
     """Transform Target To Boolean"""
     targets = {'yes':True, 'no':False}
     data['default_oct'] = data['default_oct'].map(targets)
     data['default_oct'] = data['default_oct'].astype('bool')
     return data
 
-def get_transformed_data(path_to_data, is_training):
-    data = pd.read_csv(path_to_data, index_col='customer_id')
-    
-    # Ensure No Duplicated Records
-    data = data.drop_duplicates()
-    
-    # Inital take, drop all with null values, ask further questions why NaN exists
-    data = data.dropna(axis=0)
-    
+def get_transformed_credit_card_data(path_to_data, is_training):
+  """Get and transform credit card data into f"""
+    data = get_credit_card_data(path_to_data)
+    data = handle_duplicate_records(data)
     data = transform_categoical_features(data)
     data = transform_bill_and_pay_amount(data)
     data = generate_total_months_delinqient(data)
     
     if is_training:
-        data = transform_target(data)
+        data = transform_target_variable(data)
   
     return data
     
-test_data = get_transformed_data(path_to_data = "../data/train.csv", is_training = True)
-train_data = get_transformed_data(path_to_data = "../data/test.csv", is_training = False) 
+test_data = get_transformed_credit_card_data(path_to_data = "../data/train.csv", is_training = True)
+train_data = get_transformed_credit_card_data(path_to_data = "../data/test.csv", is_training = False) 
