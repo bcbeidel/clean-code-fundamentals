@@ -52,6 +52,7 @@ When preparing for these discussions, these are the resources I leaned on the mo
 - [Of Spaces, underscores, and dashes](https://blog.codinghorror.com/of-spaces-underscores-and-dashes/)
 - [Which programming case is correct](https://www.reddit.com/r/ProgrammerHumor/comments/5iqykw/vs_help_me_settle_the_age_old_programming_case/)
   - Hint: It depends.
+- Single Responsiblity Principle --> [Curly's Law: Do One Thing](https://blog.codinghorror.com/curlys-law-do-one-thing/)
 
 ## Contributors
 
