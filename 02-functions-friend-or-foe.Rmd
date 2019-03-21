@@ -92,8 +92,6 @@ extract_flagged_orders = function(orders){
 <br> a.k.a. _Curly's Law_
 <br> a.k.a. _Don't let your code turn into a rat's nest_
 
-## Do one thing
-
 ## Limit your inputs
 
 Fewer inputs require less brain-power to understand.
