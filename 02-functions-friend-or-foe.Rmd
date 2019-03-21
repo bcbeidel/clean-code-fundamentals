@@ -16,16 +16,16 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## A recap
 
-Good Names are...
+Back to last week... Good Names are...
 
-- Informative 
-- Distinct
-- Consistent
-- Searchable
+> - Informative 
+> - Distinct
+> - Consistent
+> - Searchable
 
 ## Functions: Friend or Foe?
 
-**Functions can be used to do which of the following:**
+**Question: Functions can be used to do which of the following:**
 
 <br>
 
@@ -64,7 +64,12 @@ get_em = function(orders){
 }
 ```
 
+<<<<<<< HEAD
 <br> _What are some better names for this function?_
+=======
+<br> 
+- _What are some better names for this function?_
+>>>>>>> session-2
 
 ---
 
@@ -110,7 +115,9 @@ data = get_data(path = "..data/test.csv",
 ```
 <br>
 
-_What does each additional parameter tell us about get_data?_
+- _What might each additional parameter tell us about `get_data`?_
+- _What might be some alternative names for some of these functions?_
+    - Why did you decided to rename them? What 'rule' are they violating?
 
 ## Abstract a single layer
 
@@ -153,7 +160,8 @@ def calculate_sum(a, b):
     sum_vals = a + b
     return(sum_vals)
     
-calculate_sum(1, 2)
+total = calculate_sum(1, 2)
+print(total)
 print(sum_vals)
 ```
 
@@ -162,7 +170,7 @@ print(sum_vals)
 
 ## In summary...
 
-Good functions
+Good functions do the following...
 
 <br>
 
@@ -176,8 +184,7 @@ Good functions
 
 **Description:** Find a partner and exchange a block of code you have written. 50-100 lines. Try and refactor the code based on our discussion while maintaining functionality.  For the first 10 minutes try not to ask any questions, and allow the code to "speak" for itself.
 
-**Time:** 30 Minutes Total
+**Time:** 20 Minutes Total
 
 - 10 Minutes - Refactor partner code, no questions
-- 10 Minutes - Refactor partner code, with questions
 - 10 Minutes - Review your results with your partner

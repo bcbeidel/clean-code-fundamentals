@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 # The following python script contains a series of transformations on raw dataset in preparation for a machine learning process.  However, the author didn't have much regard for good coding practices. Given what you have learned thus far, refactor this script into something more modular and readable.
+=======
+#   The following python script contains a series of transformations on raw dataset 
+# in preparation for a machine learning process. However, the author didn't have 
+# much regard for good coding practices. Given what you have learned 
+# thus far, refactor this script into something more modular and readable.
+>>>>>>> session-2
 
 import pandas as pd
 
@@ -14,7 +21,11 @@ trd['sex'] = trd['sex'].astype('category')
 tstd['sex'] = tstd['sex'].map({1:'male', 2:'female'})
 tstd['sex'] = tstd['sex'].astype('category')
 
+<<<<<<< HEAD
 # map `marrige` to a categorical variable and handle null values
+=======
+# map `marriage` to a categorical variable and handle null values
+>>>>>>> session-2
 trd['marriage'] = trd['marriage'].map({1:'single', 2:'married', 3:'other'})
 trd['marriage'] = trd['marriage'].fillna('other')
 trd['marriage'] = trd['marriage'].astype('category')

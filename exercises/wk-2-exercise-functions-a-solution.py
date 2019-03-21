@@ -1,4 +1,12 @@
-# Conduct a series of data transformations to training and test sets prior to modeling
+#   The following python script contains a series of transformations on raw dataset 
+# in preparation for a machine learning process. However, the author didn't have 
+# much regard for good coding practices. Given what you have learned 
+# thus far, refactor this script into something more modular and readable.
+# 
+# Note: This is merely one possible solution, of infinitely many... the primary
+#       objective of this exercise is to go through the effort of identifying opportunities
+#       to choose better names, and find opportunities to functionalise repeated blocks of code
+
 import pandas as pd
 
 def get_credit_card_data(path):
@@ -10,7 +18,7 @@ def handle_duplicate_records(data):
     return data
 
 def transform_sex(data):
-    """Transform Numeric To Cateogical Features"""
+    """Transform Numeric To Categorical Features"""
     data['sex'] = data['sex'].map({1:'male', 2:'female'})
     data['sex'] = data['sex'].astype('category')
     return data
