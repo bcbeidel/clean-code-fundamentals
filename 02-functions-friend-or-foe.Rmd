@@ -1,0 +1,185 @@
+---
+title: "Clean Code Fundamentals"
+subtitle: "Functions: Friend or Foe?"
+author: "Brandon Beidel"
+date: "3/19/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## {.flexbox .vcenter}
+
+![](https://imgs.xkcd.com/comics/code_quality_2.png)
+
+## A recap
+
+Back to last week... Good Names are...
+
+> - Informative 
+> - Distinct
+> - Consistent
+> - Searchable
+
+## Functions: Friend or Foe?
+
+**Question: Functions can be used to do which of the following:**
+
+<br>
+
+> A) Create descriptive landmarks in the flow of logic
+> B) Provide concise summary of inputs for a task
+> C) Encapsulate logic into small, testable blocks
+> D) Create reusable blocks of application logic
+
+<br> 
+
+> - _It can do all of these things, but only if you try..._
+
+## Qualities of a good function
+
+What are some things that make a good function?
+
+<br>
+
+- Has a descriptive name
+- Does One Thing
+- Uses Fewer Arguments
+- Provides a single layer of abstraction
+- Is Side Effect Free
+
+## Use descriptive names 
+
+```{r, echo = TRUE, eval = FALSE}
+get_em = function(orders){
+  flagged_orders = list()
+  for (order in orders){
+    if (is_flagged_order(order)){
+      flagged_orders = append(flagged_orders, order)
+    }
+  }
+  return(flagged_orders)
+}
+```
+
+<br> _What are some better names for this function?_
+
+---
+
+```{r, echo = TRUE, eval = FALSE}
+extract_flagged_orders = function(orders){
+  flagged_orders = list()
+  for (order in orders){
+    if (is_flagged_order(order)){
+      flagged_orders = append(flagged_orders, order)
+    }
+  }
+  return(flagged_orders)
+}
+```
+
+## Do one thing
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2k1uOqRb0HU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Single responsibility principle
+
+>The single responsibility principle is a computer programming principle that states that every module, class, or function should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class.
+
+<br> a.k.a. _Curly's Law_
+<br> a.k.a. _Don't let your code turn into a rat's nest_
+
+## Limit your inputs
+
+Fewer inputs require less brain-power to understand.
+
+```{r, echo = TRUE, eval = FALSE}
+# Zero-Inputs (niladic function)
+data = get_data()
+# One Input (monadic function)
+data = get_data(path = "../data/test.csv")
+# Two Inputs (dyadic function)
+data = get_data(path = "../data/test.csv", 
+                is_train = FALSE)
+# Three Inputs (triadic function)
+data = get_data(path = "..data/test.csv", 
+                is_train = FALSE, 
+                scale = FALSE)
+```
+<br>
+
+- _What might each additional parameter tell us about `get_data`?_
+- _What might be some alternative names for some of these functions?_
+    - Why did you decided to rename them? What 'rule' are they violating?
+
+## Abstract a single layer
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+def get_transformed_credit_card_data(path_to_data, is_training):
+  """Get and transform credit card data into f"""
+    data = get_credit_card_data(path_to_data)
+    data = handle_duplicate_records(data)
+    data = transform_categoical_features(data)
+    data = transform_bill_and_pay_amount(data)
+    data = generate_total_months_delinqient(data)
+    if is_training:
+        data = transform_target_variable(data)
+    return data
+```
+<br>
+If `code` == `writing`, then **functions can be framed as structured paragraphs**. They have topic sentences, supporting details, and a conclusion.
+
+## Don't create side-effects {.flexbox .vcenter}
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sarcasm is a weird way of pronouncing depression (source: <a href="https://t.co/BsPr9oY3Se">https://t.co/BsPr9oY3Se</a> ) <a href="https://twitter.com/hashtag/reddit?src=hash&amp;ref_src=twsrc%5Etfw">#reddit</a> <a href="https://twitter.com/hashtag/dev?src=hash&amp;ref_src=twsrc%5Etfw">#dev</a> <a href="https://twitter.com/hashtag/meme?src=hash&amp;ref_src=twsrc%5Etfw">#meme</a> <a href="https://t.co/K1Zx2ZQ3TC">pic.twitter.com/K1Zx2ZQ3TC</a></p>&mdash; Code Memes (@CodeDoesMeme) <a href="https://twitter.com/CodeDoesMeme/status/1059211349199384576?ref_src=twsrc%5Etfw">November 4, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+## Side-effects, a definition
+
+> In computer science, an operation, function or expression is said to have a side effect if it modifies some state variable value(s) outside its local environment, that is to say has an observable effect besides returning a value (the main effect) to the invoker of the operation.
+
+<br> **Common Side Effects:**
+
+> - reliance on a global variable being set
+> - updating the value of a global variable
+> - saving data to a file, database, or another system
+
+## Side-effects, a simple example
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+def calculate_sum(a, b):
+    print(a)
+    pickle.dump(b, open("second_argument.p", "wb" ))
+    sum_vals = a + b
+    return(sum_vals)
+    
+total = calculate_sum(1, 2)
+print(total)
+print(sum_vals)
+```
+
+- _Which lines create a side-effect?_
+- _What should we expect to happen if we were to run this code?_
+
+## In summary...
+
+Good functions do the following...
+
+<br>
+
+- use descriptive names
+- follow the single responsibility principle
+- use fewer input arguments
+- abstract away logic, one layer at a time
+- don't create side-effects
+
+## Another exercise
+
+**Description:** Find a partner and exchange a block of code you have written. 50-100 lines. Try and refactor the code based on our discussion while maintaining functionality.  For the first 10 minutes try not to ask any questions, and allow the code to "speak" for itself.
+
+**Time:** 20 Minutes Total
+
+- 10 Minutes - Refactor partner code, no questions
+- 10 Minutes - Review your results with your partner
