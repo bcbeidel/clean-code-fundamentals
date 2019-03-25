@@ -64,12 +64,7 @@ get_em = function(orders){
 }
 ```
 
-<<<<<<< HEAD
 <br> _What are some better names for this function?_
-=======
-<br> 
-- _What are some better names for this function?_
->>>>>>> session-2
 
 ---
 
