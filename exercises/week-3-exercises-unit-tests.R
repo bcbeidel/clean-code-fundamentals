@@ -24,7 +24,7 @@ library(testthat)
 #'  - Rerun the tests, how does the output change in the console?
 #' 
 add_two_numbers = function(a, b){
-  return(a - b)
+  return(a + b)
 }
 
 #' This is a passing test.  Run these lines, nothing bad should happen.

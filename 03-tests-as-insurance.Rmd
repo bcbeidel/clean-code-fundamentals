@@ -236,7 +236,7 @@ absolute_value = function(x){
 
 ## Testing Exceptions
 
-```{r, echo = TRUE, eval = TRUE}
+```{r, echo = TRUE, eval = FALSE}
 testthat::test_that("Check behavior NA", {
   testthat::expect_error(absolute_value(NA))
 })

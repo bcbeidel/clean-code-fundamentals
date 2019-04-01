@@ -1,0 +1,151 @@
+---
+title: "Exceptions, Boundaries, and other patterns"
+subtitle: "Oh, my."
+author: "Brandon Beidel"
+date: "4/2/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Don't jump around...
+
+![](https://imgs.xkcd.com/comics/goto.png)
+
+## Nomenclature: Exceptions v. Errors
+
+**Error:**
+
+  - indicates serious problems that a reasonable application should not try to catch.
+  - i.e., you can't fix it, give up now (think syntax error)
+
+**Exception:**
+
+  - indicates a condition that we can catch, and possibly recover from
+  - Your program runs, but runs into a condition it doesn't know how to handle, so you throw an exception
+
+python, has `InsertNameHereError`, R has `stop()` and `warning()`.  The names may change, but the idea is still the same. Errors can't be handled, exceptions can be handled.
+
+## Clean Exception Handling
+
+- Start with the `Try-Catch-Finally`
+- Provides context
+- DON'T RETURN NULL
+- DON'T PASS NULL
+
+## Begin with the end in mind
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+try:
+    bids = calculate_bid(adgroup_id=an_id)
+except ValueError as err:
+    print("An invalid value provided, defaulting to 0 bid. ", err)
+    bids = 0
+except:
+    print("Unexpected error:", sys.exc_info()[0])
+    raise
+```
+
+- Which exception block handles the most broad category of things?
+- Which block would you consider exception v. error handling?
+- What does `raise` do?
+
+## Now for the next turtle down...
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+# bid_calculator.py
+def calculate_bid(adgroup_id):
+
+    if type(adgroup_id) != int:
+        raise ValueError("adgroup_id must be an integer")
+
+    if adgroup_id < 0:
+        raise ValueError("adgroup_id must be greater than 0")
+
+    raise NotImplementedError("This function is not implemented. Get to work.")
+```
+
+- What conditions are required to hit: 
+  - `ValueError("adgroup_id must be an integer")`
+  - `ValueError("adgroup_id must be greater than 0")`
+  - `NotImplementedError("This method is not implemented. Get to work.")`
+- What is the caller expected to do for each option?
+
+## What causes `null` exceptions?
+
+- “uninitialized” reference type variables — variables which are initialized with nulls and are assigned their real value afterward. A bug can cause them never to be reassigned.
+- uninitialized reference-type class members.
+- explicit assignment to null or returning null from a function
+
+## Why are they bad?
+
+- It makes tracing (and debugging) the real problem harder
+- It hides the original error
+
+<br>
+<br>
+<br>
+<br>
+
+If you don't believe me, believe Sir Charles Antony Richard Hoare, developer of the `QuickSort` algorithm. [Null References: The Billion Dollar Mistake](https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare)
+
+## An contrived example...
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+def get_reciprocal(x):
+    if x == 0:
+        return None
+    return 1 / x
+
+def double_a_number(x):
+    return 2 * x
+
+def pass_a_number(x):
+    return x
+
+def manipulate_number(x):
+    reciprocal = get_reciprocal(x)
+    another_step = pass_a_number(reciprocal)
+    double_reciprocal = double_a_number(another_step)
+
+    return double_reciprocal
+```
+
+- What would we expect the stack-trace to look like?
+- Where would be a better location for an explicit check and error?
+- Why is it bad?
+
+## Boundaries {.flexbox .vcenter}
+
+![](./img/boundaries.jpeg)
+
+## Boundaries, why do we care?
+
+## How can we protect ourselves?
+
+Boundaries are effective construct that can help protect from headaches.  Some migrane reducing techniques include:
+
+- Wrapping, centralizing usage of 3rd party code
+- Use of learning tests
+- Interfaces and Dependency Injection Patterns
+- Decouple 
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
