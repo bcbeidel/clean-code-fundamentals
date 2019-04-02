@@ -1,5 +1,5 @@
 ---
-title: "Exceptions, Boundaries, and other patterns"
+title: "Exceptions, Boundaries, and Polymorphism"
 subtitle: "Oh, my."
 author: "Brandon Beidel"
 date: "4/2/2019"
@@ -31,13 +31,14 @@ python, has `InsertNameHereError`, R has `stop()` and `warning()`.  The names ma
 ## Clean Exception Handling
 
 - Start with the `Try-Catch-Finally`
-- Provides context
+- Provide context
 - DON'T RETURN NULL
 - DON'T PASS NULL
 
 ## Begin with the end in mind
 
 ```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+# main.py
 try:
     bids = calculate_bid(adgroup_id=an_id)
 except ValueError as err:
@@ -48,7 +49,7 @@ except:
     raise
 ```
 
-- Which exception block handles the most broad category of things?
+- Which exception block handles the broadest category of things?
 - Which block would you consider exception v. error handling?
 - What does `raise` do?
 
@@ -64,8 +65,10 @@ def calculate_bid(adgroup_id):
     if adgroup_id < 0:
         raise ValueError("adgroup_id must be greater than 0")
 
-    raise NotImplementedError("This function is not implemented. Get to work.")
+    raise NotImplementedError("Get to work.")
 ```
+
+---
 
 - What conditions are required to hit: 
   - `ValueError("adgroup_id must be an integer")`
@@ -119,33 +122,177 @@ def manipulate_number(x):
 
 ## Boundaries {.flexbox .vcenter}
 
-![](./img/boundaries.jpeg)
+```{r, out.width = "600px", echo = FALSE}
+knitr::include_graphics("./img/boundaries.jpeg")
+```
 
 ## Boundaries, why do we care?
 
 ## How can we protect ourselves?
 
-Boundaries are effective construct that can help protect from headaches.  Some migrane reducing techniques include:
+Boundaries are effective construct that can help protect from headaches.  Some migraine reducing techniques include:
 
-- Wrapping, centralizing usage of 3rd party code
-- Use of learning tests
+- Wrapping, centralizing usage of 3rd party code 
 - Interfaces and Dependency Injection Patterns
-- Decouple 
+- Use of learning tests
 
+## Wrapping 3rd Party Code: Part 1
 
-```{r cars}
-summary(cars)
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+# main.py
+def is_most_recent_version(file):
+    existing_file_meta_data = dbx.get_meta_data(file.name)
+    if existing_file_meta_data is None:
+        return True
+    if existing_file_meta_data.date > file.date: 
+        return False
+    return True
+
+if __name__ == "__main__":
+    dbx = dropbox.Dropbox(config.access_token)
+    file_list = get_files_for_upload()
+    for file in file_list:
+        if (is_most_recent_version(file)):
+            dbx.file_upload(file)
 ```
 
-## Including Plots
+- What external service is our code dependent on?
+- How could we insulate ourselves from these changes?
 
-You can also embed plots, for example:
+## Wrapping 3rd Party Code: Part 2
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+# DocumentWarehouse.py
+class DocumentWarehouse:
+    def __init__(self, access_token):
+        self.dbx = dropbox.Dropbox(access_token)
+
+    def should_be_updated(self, file):
+        meta  = self.dbx.get_meta_data(file.name)
+        if meta is None: # No file in DBX
+            return False
+        if meta.date > file.date # existing file is more recent
+            return False
+        return True
+
+    def upload_file(self, file):
+        self.dbx.upload_file(file)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Wrapping 3rd Party Code: Part 3
 
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+# main.py (refactored)
+import DocumentWarehouse
 
+if __name__ == "__main__":
+    dw = DocumentWarehouse(config.access_token)
+    file_list - get_files_for_upload()
+    for file in file_list:
+        if dw.file_should_be_updated(file):
+            dw.upload_file(file)
+```
+
+- What challenges would switching to AWS provide?
+- How would that change if you were asked to maintain access to both AWS and dropbox?
+
+## Wrapping 3rd Party Code: Part 4
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+from abc import abstractmethod
+
+class DocumentWarehouse:
+    @abstractmethod
+    def should_be_updated(self, file=str):
+        pass
+
+    @abstractmethod
+    def upload_file(self, file=str):
+        pass
+```
+
+---
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+from DocumentWarehouse import DocumentWarehouse
+from dropbox import dropbox
+
+class DropboxWarehouse(DocumentWarehouse):
+
+    def __init__(self, access_key):
+        self.dbx = dropbox.Dropbox(access_key)
+
+    def should_be_updated(self, file=str):
+        meta  = self.dbx.get_meta_data(file.name)
+        if meta is None: # No file in DBX
+            return False
+        if meta.date > file.date: # existing file is more recent
+            return False
+        return True
+
+    def upload_file(self, file=str):
+        self.dbx.upload_file(file)
+```
+
+---
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+from DocumentWarehouse import DocumentWarehouse
+from aws import s3
+
+class S3Warehouse(DocumentWarehouse):
+
+    def __init__(self, access_key):
+        self.s3 = s3(access_key)
+
+    def should_be_updated(self, file=str):
+        meta  = self.s3.get_details(file.name)
+        if meta.file_exists == False:
+            return True
+        if meta.date > file.date: # existing file is more recent
+            return False
+        return True
+
+    def upload_file(self, file=str):
+        self.s3.save_file(file)
+```
+
+## But Why?
+
+Now, we can swap our storage provider with a single line of code...
+
+```{python, echo = TRUE, eval = FALSE, python.reticulate = FALSE}
+if __name__ == "__main__":
+    dw = DropboxWarehouse(config.access_token)
+    file_list - get_files_for_upload()
+    for file in file_list:
+        if dw.file_should_be_updated(file):
+            dw.upload_file(file)
+##########################
+if __name__ == "__main__":
+    dw = S3Warehouse(config.access_token)
+    file_list - get_files_for_upload()
+    for file in file_list:
+        if dw.file_should_be_updated(file):
+            dw.upload_file(file)
+```
+
+## Think contracts
+
+`polymorphism` - is the provision of a single interface to entities of different types or the use of a single symbol to represent multiple different types
+
+`design-by-contract` - prescribes that software designers should define formal, precise and verifiable interface specifications for software components, which extend the ordinary definition of abstract data types
+
+<hr>
+
+Each language may (or may not) implement some form of this. Some terms you might hear:
+
+- Abstract Classes (Python, Java, C#)
+- Interfaces (Java, C#, Python, Go)
+- Traits (Scala)
+- S3 + S4 Objects, and RefClases (R)
+
+## Comments, Questions, Concerns? {.flexbox .vcenter}
+
+![](https://imgs.xkcd.com/comics/constructive.png)
 
