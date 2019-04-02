@@ -24,7 +24,10 @@ The discussion(s) is structured as four one hour blocks, intended to cover the f
 3. **Testing**
   - Associated Reading(s): 
     - Clean Code: Unit Tests (p. 121-133)
-3. **TBD**
+3. **Exceptions, Boundaries, Polymorphism**
+ - Associated Readings(s):
+    - Clean Code: Error Handling (p. 103-112)
+    - Clean Code: Boundaries (p. 113-120)
 
 Each discussion is accompanied by an associated reading and a few short coding exercises.  In addition, prior to starting, each participant is encouraged to submit a block of code that they would like to refactor over the course of the discussions (50 - 100 lines).  During the hour, some time will be allocated to review the code in pairs and discuss how it could be improved based on the discussion.  Code examples will be in `R` but many of the principals are the same.
 
