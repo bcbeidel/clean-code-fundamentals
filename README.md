@@ -15,19 +15,23 @@ This is intended to share a series of coding heuristics, that have been impresse
 The discussion(s) is structured as four one hour blocks, intended to cover the following topics.
 
 1. **Introduction & Naming Things**
-  - Associated Reading(s): 
-    - Clean Code: Introduction (p.7-17) 
-    - Clean Code: Meaningful Names (p. 17-30)
+    - <https://bcbeidel.github.io/clean-code-fundamentals/01-introduction-and-naming-things.html>
+    - Associated Reading(s): 
+        - Clean Code: Introduction (p.7-17) 
+        - Clean Code: Meaningful Names (p. 17-30)
 2. **Functions**
-  - Associated Reading(s): 
-    - Clean Code: Functions (p. 31-52)
+    - <https://bcbeidel.github.io/clean-code-fundamentals/02-functions-friend-or-foe.html>
+    - Associated Reading(s): 
+        - Clean Code: Functions (p. 31-52)
 3. **Testing**
-  - Associated Reading(s): 
-    - Clean Code: Unit Tests (p. 121-133)
+    - <https://bcbeidel.github.io/clean-code-fundamentals/03-tests-as-insurance.html>
+    - Associated Reading(s): 
+        - Clean Code: Unit Tests (p. 121-133)
 3. **Exceptions, Boundaries, Polymorphism**
- - Associated Readings(s):
-    - Clean Code: Error Handling (p. 103-112)
-    - Clean Code: Boundaries (p. 113-120)
+    - <https://bcbeidel.github.io/clean-code-fundamentals/04-exceptions-boundaries-dependencies.html>
+    - Associated Readings(s):
+        - Clean Code: Error Handling (p. 103-112)
+        - Clean Code: Boundaries (p. 113-120)
 
 Each discussion is accompanied by an associated reading and a few short coding exercises.  In addition, prior to starting, each participant is encouraged to submit a block of code that they would like to refactor over the course of the discussions (50 - 100 lines).  During the hour, some time will be allocated to review the code in pairs and discuss how it could be improved based on the discussion.  Code examples will be in `R` but many of the principals are the same.
 
